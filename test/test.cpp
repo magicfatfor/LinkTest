@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <fstream>
 
-
+#define print(x) std::cout << x << std::endl
 
 #define Initsize 100
 
@@ -155,27 +155,86 @@ LinkList Union(LinkList A, LinkList B)
 	free(B);
 	return A;
 }
-bool Patten(LinkList A; LinkList B)
+bool Patten(LinkList A,LinkList B)
 {
+	LNode* la = A->next, * lb = B->next;
+	while (la->data != lb->data && la != NULL) la = la->next;
+	while (la != NULL && lb != NULL)
+	{
+		if (la->data!=lb->data)
+		{
+			return false;
+		}
+		la = la -> next;
+		lb = lb -> next;
+	}
+	if (la == NULL && lb != NULL)return false;
+	return true;
+}
 
+LNode* FindLoopStart(LNode* head)
+{
+	LNode* fast = head, * slow = head;
+	while (fast != NULL && fast->next != NULL)
+	{
+		slow = slow->next;
+		//print(slow->data);
+		fast = fast->next ->next;
+		if (slow == fast) break;
+
+	}
+	if (fast == NULL || fast->next == NULL)
+		return NULL;
+	LNode* p1 = head, * p2 = slow;
+	while (p1 != p2)
+	{
+		p1 = p1->next;
+		p2 = p2->next;
+
+	}
+	return p1;
+}
+void InitLoopTest(LinkList& L)
+{
+	LNode* s,*a,*b;
+	L = (LinkList)malloc(sizeof(LNode));
+	a = L;
+	for (int i = 0; i < 20; i++)
+	{
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = i;
+		a->next = s;
+		a = s;
+	}
+	b = s;
+	for (int i = 30; i < 50; i++)
+	{
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = i;
+		a->next = s;
+		a = s;
+	}
+	a->next = b;
 }
 int main()
 {
 	LinkList L;
-	InitLinkListScanf(L);
+	InitLoopTest(L);
 	LNode* q = L->next;
-	while (q!=NULL)
-	{
-		std::cout << q->data << std::endl;
-		q = q->next;
-	}
+	//while (q!=NULL)
+	//{
+	//	std::cout << q->data << std::endl;
+	//	q = q->next;
+	//}
+	LNode* p = FindLoopStart(L);
+	std::cout << p->data << std::endl;
 	std::cout << "BBBBBBBBB" << std::endl;
-	LinkList B =DeleteSame(L);
+	/*LinkList B =DeleteSame(L);
 	LNode* p = B->next;
 	while (p != NULL)
 	{
 		std::cout << p->data << std::endl;
 		p = p->next;
-	}
+	}*/
 	
 }
