@@ -112,6 +112,8 @@ LinkList FindSame(LinkList A,LinkList B)
 	}
 	return C;
 }
+
+
 LinkList Union(LinkList A, LinkList B)
 {
 	LNode* la = A->next, *lb = B->next,*p,*q=A;
@@ -155,9 +157,21 @@ LinkList Union(LinkList A, LinkList B)
 	free(B);
 	return A;
 }
-bool Patten(LinkList A; LinkList B)
+bool Patten(LinkList A,LinkList B)
 {
-
+	LNode* la = A->next, * lb = B->next;
+	while (la->data != lb->data && la != NULL) la = la->next;
+	while (la != NULL && lb != NULL)
+	{
+		if (la->data!=lb->data)
+		{
+			return false;
+		}
+		la = la -> next;
+		lb = lb -> next;
+	}
+	if (la == NULL && lb != NULL)return false;
+	return true;
 }
 int main()
 {
