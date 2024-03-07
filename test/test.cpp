@@ -112,6 +112,8 @@ LinkList FindSame(LinkList A,LinkList B)
 	}
 	return C;
 }
+
+
 LinkList Union(LinkList A, LinkList B)
 {
 	LNode* la = A->next, *lb = B->next,*p,*q=A;
